@@ -1,0 +1,13 @@
+# Js node_modules
+node_modules
+
+# confidential keys
+.env             
+
+# ignore these files 
+scraps.js
+about.ejs
+list2.ejs
+app2.ejs
+date.js
+
