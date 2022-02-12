@@ -14,7 +14,7 @@ const _ = require("lodash");
 //import mongoose module
 const mongoose = require("mongoose");
 
-const date = require(__dirname + "/date.js");
+//const date = require(__dirname + "/date.js");
 
 const app = express();
 
@@ -40,7 +40,7 @@ const db = mongoose.connection;
 
 //bind connection to error event to get notification of connection errors
 db.on("error", console.error.bind(console, "MongoDB connection error"));
-cl("connection made");
+//cl("connection made");
 
 ////////////////// Schemas / Models ////////////////////////////////
 //
@@ -58,15 +58,12 @@ const listSchema = {
 };
 const List = mongoose.model("List", listSchema);
 
-cl("created schemas/models");
+//cl("created schemas/models");
 
 /////////////////////// Routes ///////////////////////////////////
 //
 app.get("/", function (req, res) {
-  // const day = date.getDate();
-  //  res.render("list", { listTitle: day, newListItems: items });
-  // no longer using array items so instead create the documents ..
-  cl("app.get'/'");
+  //  cl("app.get'/'");
 
   // read data from database
   Item.find({}, function (err, foundItems) {
@@ -87,8 +84,8 @@ app.post("/", function (req, res) {
   const listName = req.body.list;
 
   // if first char of input is "/" then use this as route to custom list, otherwise, add the item
-  cl(itemName.substring(0, 1));
-  cl(itemName.substring(1));
+  // cl(itemName.substring(0, 1));
+  // cl(itemName.substring(1));
 
   if (itemName.substring(0, 1) === "/") {
     res.redirect("/" + itemName.substring(1));
@@ -98,7 +95,7 @@ app.post("/", function (req, res) {
   const item = new Item({
     name: itemName,
   });
-  cl(`app.post / itemName: ${itemName}, list: ${listName}`);
+  //  cl(`app.post / itemName: ${itemName}, list: ${listName}`);
 
   // now check if listName = Today, so an item is being added to "Todays" list and if so, save item and redirect to home
   // if listName <> Today, that means that a custom list was entered eg localhost:3000/work and in the custom route, if that custom list is found, it is displayed, otherwise it is created.
@@ -107,7 +104,7 @@ app.post("/", function (req, res) {
     item.save();
     res.redirect("/");
   } else {
-    // if listName is not "today" then that means it is already added as a custom list. So we search for that list and then add the new item to that list. It MUST be found. When a new list name is first given as a (custom route) the list is created at that point and then the listName item is assigned. So when you get to this point, of adding a new item, you are adding it to "listNam". The search here is not so much to find IF it exists but to find the record to add the item to the list.
+    // if listName is not "today" then that means that custom list already added, so FIND it so it can be updated.
     List.findOne({ name: listName }, function (err, foundList) {
       foundList.items.push(item);
       foundList.save();
@@ -117,7 +114,7 @@ app.post("/", function (req, res) {
 });
 
 app.post("/delete", function (req, res) {
-  cl("app.post'/delete'");
+  //cl("app.post'/delete'");
   const checkedId = req.body.checkbox;
   const listName = req.body.listName; // get this from hidden input
 
@@ -149,7 +146,7 @@ app.post("/delete", function (req, res) {
 
 //custom lists
 app.get("/:customListName", function (req, res) {
-  cl("app.get'/:customListName'");
+  // cl("app.get'/:customListName'");
   const customListName = _.capitalize(req.params.customListName);
 
   // check if name exists and if it does display otherwise create it
@@ -163,7 +160,7 @@ app.get("/:customListName", function (req, res) {
         });
         list.save();
         res.redirect("/" + customListName); // redirects back to this route but then finds new list and displays in else block
-        cl("created list :" + customListName);
+        //   cl("created list :" + customListName);
       } else {
         // display existing list
         res.render("list", {
