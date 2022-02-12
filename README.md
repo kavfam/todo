@@ -1,13 +1,17 @@
 # todo
 to-do lists
+
 Another project from AY JS course on Udemy and App Brewery. 
 This project is a to-do list where you can enter as many lists as you want and as many items per list as you want. Its basic - only a description field for list/item.
+
 Background
 Its js using express and mongoose/mongod cloud database. 
 Uses .env for connection credentials for mongo atlas / cloud database. 
 being express it had the usual app.get, .post and .listen.
 Uses ejs for rendering items/list.
-Deployed to Heroku so uses Config Vars there to substitute for .env variables
+Deployed to Heroku so uses Config Vars there to substitute for .env variables.
+https://fierce-tundra-88013.herokuapp.com/
+
 App.js
 Requires express, body-parser, loadash, mongoose, dotenv.
 Sets up connection to mongoDB cluster.
